@@ -3,7 +3,8 @@
     <h2 class="list-title">
       <router-link
         :to="{ name: 'Category', params: { id: category['.key'] } }"
-      >{{ category.name }}</router-link>
+        >{{ category.name }}</router-link
+      >
     </h2>
     <ForumList :forums="categoryForums" />
   </div>
@@ -24,7 +25,9 @@ export default {
   },
   computed: {
     categoryForums() {
-      return Object.values(sourceData.forums).filter(forum => forum.categoryId === this.category['.key']);
+      return Object.values(sourceData.forums).filter(
+        (forum) => forum.categoryId === this.category[".key"]
+      );
     },
   },
 };
