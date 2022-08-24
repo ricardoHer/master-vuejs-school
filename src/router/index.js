@@ -5,6 +5,8 @@ import ThreadShow from "@/pages/PageThreadShow";
 import Forum from "@/pages/PageForum";
 import NotFound from "@/pages/PageNotFound"
 import Category from "@/pages/PageCategory"
+import Profile from "@/pages/PageProfile"
+
 
 Vue.use(Router);
 
@@ -31,6 +33,12 @@ export default new Router({
       path: "/category/:id",
       name: "Category",
       component: Category,
+      props: true
+    },
+    {
+      path: "/me",
+      name: "Profile",
+      component: Profile,
       props: true
     },
     {

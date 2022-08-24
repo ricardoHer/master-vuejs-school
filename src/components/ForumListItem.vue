@@ -11,8 +11,10 @@
     </div>
 
     <div class="threads-count">
-      <p><span class="count">{{ threadsCount }}</span></p>
-      {{  threadsCount === 1 ? 'thread' : 'threads'  }}
+      <p>
+        <span class="count">{{ threadsCount }}</span>
+      </p>
+      {{ threadsCount === 1 ? "thread" : "threads" }}
     </div>
 
     <div class="last-thread">
@@ -32,19 +34,21 @@
   </div>
 </template>
 <script>
-    export default {
-        props: {
-            forum: {
-                required: true,
-                type: Object
-            }
-        },
-        computed: {
-            threadsCount() {
-                return this.forum.threads ? Object.values(this.forum.threads).length : 0
-            }
-        }
-    }
+import { countObjectProperties } from "@/utils";
+
+export default {
+  props: {
+    forum: {
+      required: true,
+      type: Object,
+    },
+  },
+  computed: {
+    threadsCount() {
+      return countObjectProperties(this.forum.threads);
+    },
+  },
+};
 </script>
 
 
