@@ -3,10 +3,10 @@ import Router from "vue-router";
 import Home from "@/pages/PageHome";
 import ThreadShow from "@/pages/PageThreadShow";
 import Forum from "@/pages/PageForum";
-import NotFound from "@/pages/PageNotFound"
-import Category from "@/pages/PageCategory"
-import Profile from "@/pages/PageProfile"
-
+import NotFound from "@/pages/PageNotFound";
+import Category from "@/pages/PageCategory";
+import Profile from "@/pages/PageProfile";
+import ThreadCreate from "@/pages/PageThreadCreate"
 
 Vue.use(Router);
 
@@ -21,6 +21,12 @@ export default new Router({
       path: "/forum/:id",
       name: "Forum",
       component: Forum,
+      props: true
+    },
+    {
+      path: "/thread/create",
+      name: "ThreadCreate",
+      component: ThreadCreate,
       props: true
     },
     {
@@ -40,6 +46,12 @@ export default new Router({
       name: "Profile",
       component: Profile,
       props: true
+    },
+    {
+      path: "/me/edit",
+      name: "ProfileEdit",
+      component: Profile,
+      props: { edit: true }
     },
     {
       path: "*",
