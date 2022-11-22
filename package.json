@@ -17,10 +17,13 @@
     "@fortawesome/free-regular-svg-icons": "^6.2.0",
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
     "@fortawesome/vue-fontawesome": "^2.0.8",
+    "firebase": "4.12.1",
     "moment": "^2.29.4",
     "vue": "^2.5.2",
+    "vue-cli": "^2.9.6",
     "vue-router": "^3.0.1",
-    "vuex": "2"
+    "vuex": "2",
+    "yarn": "^1.22.19"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

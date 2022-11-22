@@ -3,14 +3,10 @@
     <UserProfileCard
       v-if="!edit"
       :user="user"
-      :userPostsCount="userPostsCount"
-      :userThreadsCount="userThreadsCount"
     />
     <UserProfileCardEdit
       v-if="edit"
       :user="user"
-      :userPostsCount="userPostsCount"
-      :userThreadsCount="userThreadsCount"
     />
     <div class="col-7 push-top">
       <div class="profile-header">
@@ -60,7 +56,6 @@
 <script>
 import PostList from "@/components/PostList";
 import { mapGetters } from "vuex";
-import { countObjectProperties } from "@/utils";
 import UserProfileCard from "@/components/UserProfileCard.vue";
 import UserProfileCardEdit from "../components/UserProfileCardEdit.vue";
 
@@ -87,13 +82,7 @@ export default {
         );
       }
       return [];
-    },
-    userPostsCount() {
-      return countObjectProperties(this.user.posts);
-    },
-    userThreadsCount() {
-      return countObjectProperties(this.user.threads);
-    },
+    }
   },
 };
 </script>

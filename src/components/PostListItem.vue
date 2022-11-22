@@ -1,5 +1,5 @@
 <template>
-  <div class="post">
+  <div class="post" v-if="post && user">
     <div class="user-info">
       <a href="#" class="user-name">{{ user.name }}</a>
 
@@ -7,6 +7,7 @@
         <img class="avatar-large" :src="user.avatar" alt="" />
       </a>
 
+      <p class="desktop-only text-small">{{ userThreadCount }} posts</p>
       <p class="desktop-only text-small">{{ userPostCount }} posts</p>
     </div>
 
@@ -21,7 +22,6 @@
   </div>
 </template>
 <script>
-import { countObjectProperties } from "@/utils";
 
 export default {
   components: {},
@@ -36,8 +36,11 @@ export default {
       return this.$store.state.users[this.post.userId];
     },
     userPostCount() {
-      return countObjectProperties(this.user.posts)
+      return this.$store.getters.userPostsCount(this.post.userId)
     },
+    userThreadCount() {
+      return this.$store.getters.userThreadsCount(this.post.userId)
+    }
   },
 };
 </script>
