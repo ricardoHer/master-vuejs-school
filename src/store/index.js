@@ -1,6 +1,9 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import firebase from "firebase";
 import { countObjectProperties } from "@/utils";
+
+// To test a thread http://localhost:8080/thread/-KsjWehQ--apjDBwSBCY
 
 Vue.use(Vuex);
 
@@ -85,6 +88,64 @@ export default new Vuex.Store({
 
     updateUser({ commit }, user) {
       commit("setUser", { userId: user[".key"], user });
+    },
+
+    fetchThread({ dispatch }, { id }) {
+      return dispatch('fetchItem', { resource: 'threads', id, emoji: 'Emoji do fetch threads' })
+    },
+
+    fetchUser({ dispatch }, { id }) {
+      return dispatch('fetchItem', { resource: 'users', id, emoji: 'Emoji do fetch users' })
+    },
+
+    fetcPost({ dispatch }, { id }) {
+      return dispatch('fetchItem', { resource: 'posts', id, emoji: 'Emoji do fetch post' })
+    },
+
+    fetchPosts({dispatch}, {ids}) {
+      return dispatch('fetchItems', { resource: 'posts', emoji: 'emoji dos fetchPosts', ids })
+    },
+
+    fetchForums({dispatch}, {ids}) {
+      return dispatch('fetchItems', { resource: 'forums', emoji: 'emoji dos fetchforums', ids })
+    },
+
+    fetchAllCategories({state, commit}) {
+      console.log('Firebase', 'Emoji da Categories', 'all');
+      return new Promise((resolve, reject) => {
+        firebase.database().ref('categories').once('value', snapshot => {
+          const categoriesObject = snapshot.val()
+          Object.keys(categoriesObject).forEach(categoryId => {
+            const category = categoriesObject[categoryId]
+            commit('setItem', { resource: 'categories', id: categoryId, item: category })
+          })
+        })
+        resolve(Object.values(state.categories))
+      })
+    },
+
+    fetchItem({ state, commit }, { id, emoji, resource }) {
+      console.log("Firebase Fetch Item", emoji, id);
+
+      return new Promise((resolve, reject) => {
+        firebase
+        .database()
+        .ref(resource)
+        .child(id)
+        .once("value", (snapshot) => {
+          const item = snapshot.val();
+          commit("setItem", {
+            resource,
+            id: snapshot.key,
+            item,
+          });
+          resolve(state[resource][id]);
+        });
+      });
+    },
+
+    fetchItems({dispatch}, {ids, resource, emoji}) {
+      return Promise.all(ids.map(id => dispatch('fetchItem', { id, resource, emoji })))
     }
   },
   mutations: {
@@ -97,6 +158,11 @@ export default new Vuex.Store({
     },
     setThread(state, { threadId, thread }) {
       Vue.set(state.threads, threadId, thread);
+    },
+
+    setItem(state, { item, id, resource }) {
+      item['.key'] = id;
+      Vue.set(state[resource], id, item);
     },
     appendPostToThread: makeAppendChildToParentMutation({
       parent: "threads",
