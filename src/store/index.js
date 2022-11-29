@@ -94,6 +94,11 @@ export default new Vuex.Store({
       return dispatch('fetchItem', { resource: 'threads', id, emoji: 'Emoji do fetch threads' })
     },
 
+    fetchThreads({dispatch}, {ids}) {
+      console.log(ids)
+      return dispatch('fetchItems', { resource: 'threads', emoji: 'emoji dos fetchPosts', ids })
+    },
+
     fetchUser({ dispatch }, { id }) {
       return dispatch('fetchItem', { resource: 'users', id, emoji: 'Emoji do fetch users' })
     },
@@ -106,8 +111,16 @@ export default new Vuex.Store({
       return dispatch('fetchItems', { resource: 'posts', emoji: 'emoji dos fetchPosts', ids })
     },
 
+    fetchForum({ dispatch }, { id }) {
+      return dispatch('fetchItem', { resource: 'forums', id, emoji: 'Emoji do fetch users' })
+    },
+
     fetchForums({dispatch}, {ids}) {
       return dispatch('fetchItems', { resource: 'forums', emoji: 'emoji dos fetchforums', ids })
+    },
+
+    fetchCategory({dispatch}, {id}) {
+      return dispatch('fetchItem', { resource: 'categories', id, emoji: 'Emoji do fetch Category' })
     },
 
     fetchAllCategories({state, commit}) {
@@ -145,6 +158,8 @@ export default new Vuex.Store({
     },
 
     fetchItems({dispatch}, {ids, resource, emoji}) {
+      ids = Array.isArray(ids) ? ids : Object.keys(ids);
+
       return Promise.all(ids.map(id => dispatch('fetchItem', { id, resource, emoji })))
     }
   },
